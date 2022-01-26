@@ -42,7 +42,30 @@
 
 <button></button>
 <script>
+  const divs = document.querySelectorAll('div');
 
+  function logText(e){
+    console.log(this.classList.value);
+  //e.stopPropagation(); i.e STOP BUBBLING | CAPTURING. Console log only for the div clicked.
+  }
+/* BUBBLE up->events up i.e Default return when div #3 iss clicked.
+   ----It captures then it bubbles when clicked
+   ----console will be logged in the order #3 #2 #1  =>UPWARDS
+
+  CAPTURE down->events down i.e when  we click div #3 and capture=true,
+  ----console will be logged in the order #1 #2 #3  =>DOWNWARDS
+  ---- when capture=true & stopPropagation() is set click #3 will console log only #1 */
+  divs.forEach(div => div.addEventListener('click',logText /*, {capture: true, once = true}*/));
+/*When once is set to true it will listen for a click once and then
+  unbit itself so that there are no future clicks on it.
+  -- i.e it will console log onced and the subsequent clicks won't do anything to the console
+  in this our case */
+  const button = document.querySelector('button');
+  button.addEventListener('click', () => {
+    console.log('Click!!!')
+  }, {
+    once: true
+  });
 </script>
 </body>
 </html>
